@@ -85,8 +85,6 @@ class Measurement(models.Model):
             return self.str_value
         elif self.field.field_type == 'BOOL':
             return self.bool_value
-        elif self.field.field_type == 'JSON':
-            return self.json_value
         return None
     
     def set_value(self, value):
@@ -99,5 +97,3 @@ class Measurement(models.Model):
             self.str_value = str(value)
         elif self.field.field_type == 'BOOL':
             self.bool_value = bool(value)
-        elif self.field.field_type == 'JSON':
-            self.json_value = value
