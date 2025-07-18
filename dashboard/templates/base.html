@@ -1,0 +1,46 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+<html lang="en">
+<head>
+    {% block head %} 
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://kit.fontawesome.com/95715e8b3f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <button onclick="toggleClass()" class="show_nav_bar_btn"></button>
+    <div class="dashbord_outer">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <script>
+        (function () {
+            const isNavbarClosed = localStorage.getItem('navbarClosed');
+            if (isNavbarClosed === 'true') {
+                document.body.classList.add('closed_nav_bar');
+            }
+            document.body.classList.add('disable-transitions');
+        })();
+    </script>
+</body>
+<script>
+    function toggleClass() {
+        const bodyElement = document.querySelector('body');
+        bodyElement.classList.toggle('closed_nav_bar');
+        if (bodyElement.classList.contains('closed_nav_bar')) {
+            localStorage.setItem('navbarClosed', 'true');
+        } else {
+            localStorage.setItem('navbarClosed', 'false');
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', function() {
+        document.body.classList.remove('disable-transitions');
+    });
+</script>
+</html>

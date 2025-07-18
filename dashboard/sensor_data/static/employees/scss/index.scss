@@ -1,0 +1,30 @@
+w.building_detail{
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    min-height: 60px;
+    margin: 0px 0px 20px 0px;
+    display: flex;
+    padding: 20px;
+    justify-content: space-between;
+    .building_detail{
+        display: flex;
+        flex-direction: column;
+        margin: 10px;
+        .building_detail_list{
+            p span{
+                font-weight: bold;
+            }
+        }
+        .building_detail_graf{
+            max-width: 1000px;
+        }
+    }
+}
+.building_detail_graf_mob{
+    display: none;
+}
+@media only screen and (max-width: 1020px) {
+  .building_detail .building_detail .building_detail_graf{
+       display: none;
+}
+}

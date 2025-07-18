@@ -1,0 +1,324 @@
+.navbar_outer {
+  left: 0px;
+  background-color: rgb(217, 217, 217);
+  padding: 20px 20px;
+  height: 100vh;
+  width: 280px;
+  position: fixed;
+  opacity: 1;
+  transition: ease-out 0.2s;
+  z-index: 4000;
+}
+.navbar_outer .navbar_home {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar_outer .navbar_home a {
+  font-size: 1.5rem;
+}
+.navbar_outer .navbar_home button {
+  font-size: 2rem;
+  padding: 0px;
+  color: navy;
+  font-weight: bold;
+}
+.navbar_outer .navbar_home .navbar_close {
+  transition: 0.3s ease-in;
+  border-radius: 50%;
+  padding: 5px 10px;
+}
+.navbar_outer .navbar_home .navbar_close:hover {
+  margin-right: 5px;
+  background-color: rgba(5, 5, 82, 0.253);
+}
+.navbar_outer .navbar_profil {
+  display: flex;
+  margin-top: 20px;
+}
+.navbar_outer .navbar_profil p {
+  margin: 5px 0px;
+}
+.navbar_outer .navbar_profil button {
+  margin-left: 10px;
+  font-size: 1.1rem;
+}
+.navbar_outer ul {
+  margin: 40px 0px 20px 0px;
+}
+.navbar_outer ul li {
+  margin: 15px 0px;
+}
+.navbar_outer ul li a {
+  display: inline-block;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  transition: 0.1s ease-in;
+}
+.navbar_outer ul li a:hover {
+  background-color: rgba(5, 5, 82, 0.253);
+  color: navy;
+  font-weight: bold;
+}
+.navbar_outer ul li a i {
+  margin-right: 5px;
+}
+
+.closed_nav_bar .show_nav_bar_btn {
+  width: 35px;
+  height: 85px;
+  background-color: #b9b9b9;
+  transform: rotate(45deg);
+  position: absolute;
+  top: -25px;
+  left: -12px;
+  transition: ease-in-out 0.3s;
+}
+.closed_nav_bar .show_nav_bar_btn:hover {
+  scale: 1.5;
+  top: -30px;
+  left: -20px;
+  width: 45px;
+  height: 40px;
+  transform: rotate(55deg);
+  background-color: rgb(44, 44, 88);
+}
+.closed_nav_bar .navbar_outer {
+  left: -4000px;
+  opacity: 0;
+  transition: ease-out 0.2s;
+}
+.closed_nav_bar .dashbord_outer {
+  transition: ease-in-out 0.2s;
+  width: 100%;
+  margin-left: 0;
+}
+
+.dashbord_outer, .dashbord_outer_mob {
+  width: calc(100% - 280px);
+  margin-left: 280px;
+  min-height: 100vh;
+  background-color: rgb(244, 244, 244) 217, 217, 217;
+  padding: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  transition: ease-in-out 0.2s;
+}
+.dashbord_outer h2:first-child, .dashbord_outer_mob h2:first-child {
+  margin-top: 0px;
+}
+.dashbord_outer form p input, .dashbord_outer_mob form p input {
+  width: 40%;
+  padding: 3px;
+}
+.dashbord_outer form button, .dashbord_outer_mob form button {
+  background-color: rgb(194, 194, 194);
+  padding: 10px;
+  border-radius: 10px;
+  transition: ease-in-out 0.3s;
+}
+.dashbord_outer form button:hover, .dashbord_outer_mob form button:hover {
+  padding-right: 20px;
+}
+
+.dashbord_outer_mob {
+  width: 100%;
+  margin-left: 0px;
+  min-height: auto;
+}
+
+.building_outer .building_filter {
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  min-height: 60px;
+  margin: 0px 0px 20px 0px;
+  display: flex;
+  padding: 0px 10px 0px 0px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.building_outer .building_filter .building_search {
+  width: 40%;
+  position: relative;
+  display: flex;
+  margin: auto 0px auto 30px;
+  flex-direction: column;
+}
+.building_outer .building_filter .building_search #search_form {
+  height: fit-content;
+  margin: 0px;
+}
+.building_outer .building_filter .building_search #search_form input[type=text] {
+  border-radius: 20px;
+  padding: 10px;
+  width: 100%;
+  font-size: 1rem;
+  border: 2px solid black;
+}
+.building_outer .building_filter .building_search #search_form input[type=text]:focus-visible {
+  border: none;
+  background-color: rgb(242, 242, 242);
+}
+.building_outer .building_filter .building_search #suggestions {
+  top: 27px;
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  border: 2px solid rgb(60, 60, 60);
+  border-width: 0px 2px 2px 2px;
+  background-color: rgb(242, 242, 242);
+  border-radius: 0px 0px 10px 10px;
+}
+.building_outer .building_filter .building_search #suggestions p {
+  padding: 10px;
+  margin: 0px;
+}
+.building_outer .building_filter .building_search #suggestions p:hover {
+  background-color: rgb(226, 226, 226);
+  cursor: pointer;
+}
+.building_outer .building_filter h2 {
+  margin: auto 0px auto 30px;
+  padding: 10px 0px;
+}
+.building_outer .building_filter h4 {
+  margin: auto 0px auto 10px;
+}
+.building_outer .building_filter button {
+  margin: auto 0px auto 10px;
+  padding: 10px;
+  transition: 0.3s ease-in;
+  border-radius: 10px;
+}
+.building_outer .building_filter button i {
+  margin-right: 10px;
+}
+.building_outer .building_filter button:hover {
+  background-color: rgb(231, 231, 231);
+}
+.building_outer table {
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  width: 100%;
+  max-height: 80vh;
+}
+.building_outer table thead tr th {
+  height: 10px;
+  padding: 5px;
+  background-color: rgb(218, 218, 218);
+  transition: 0.2s ease-in-out;
+}
+.building_outer table thead tr th:hover {
+  background-color: rgb(195, 195, 195);
+  cursor: pointer;
+}
+.building_outer table tbody tr {
+  transition: 0.1s ease-in-out;
+  height: fit-content;
+}
+.building_outer table tbody tr:hover {
+  background-color: rgba(0, 0, 130, 0.5);
+  color: white;
+  cursor: pointer;
+}
+.building_outer table tbody tr td {
+  min-height: fit-content;
+  padding: 13px;
+  font-size: 0.95rem;
+}
+.building_outer table tbody .tr_message:hover {
+  background-color: white;
+  color: black;
+  cursor: auto;
+}
+
+@media only screen and (max-width: 600px) {
+  .building_outer, .building_filter {
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    padding: 10px;
+    flex-direction: column;
+  }
+  .building_outer .building_filter .building_search {
+    width: 90%;
+  }
+}
+* {
+  box-sizing: border-box;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+html {
+  font-size: 16px;
+  background-color: #eeeeee;
+}
+
+body {
+  margin: 0%;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+a:hover {
+  cursor: pointer;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  background-color: transparent;
+}
+
+.zoom {
+  transition: all 0.5s;
+}
+.zoom:hover {
+  scale: 1.05;
+}
+
+ul {
+  padding: 0px;
+}
+ul li {
+  list-style: none;
+  margin: 0%;
+}
+
+h1 {
+  margin: 0px;
+}
+
+.succes_mesage, .success {
+  padding: 10px;
+  border: 1px solid rgb(76, 172, 76);
+  background-color: rgba(89, 218, 89, 0.288);
+  color: rgb(76, 172, 76);
+}
+
+.error_mesage {
+  padding: 10px;
+  border: 1px solid rgb(172, 76, 76);
+  background-color: rgba(218, 89, 89, 0.288);
+  color: rgb(172, 76, 76);
+}
+
+.info_mesage {
+  padding: 10px;
+  border: 1px solid rgb(34, 48, 155);
+  background-color: rgba(138, 144, 232, 0.288);
+  color: rgb(34, 48, 155);
+}
+
+.hover_bold {
+  padding: 10px;
+  background-color: rgb(228, 228, 228);
+  border-radius: 7px;
+}
+.hover_bold:hover {
+  cursor: pointer;
+}

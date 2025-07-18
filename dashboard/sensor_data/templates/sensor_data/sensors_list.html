@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="building_outer">
+  <div class="building_filter">
+        <h2>Sensors of {{building}}</h2>
+        <button id="toggleButton" onclick="toggleAmount()">Show 60/120</button>
+        <h4> Found {{ num_rows }} Sensors</h4>
+    </div>
+
+  <table id="building_table">
+    <thead>
+      <tr>
+        <th>Sensor</th>
+        <th>Type</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for emp in sensor_data %}
+        <tr onclick="window.location.href='detail/{{ emp.id }}'">
+          <td>{{ emp.sensor.name }} - {{ emp.sensor.serial_number }}</td>
+          <td>{{ emp.sensor.sensor_category.name }}</td>
+        <td>{{ emp.value }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="2">No sensors found</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+<script>
+
+    function toggleAmount() {
+        var currentURL = window.location.href;
+        if (currentURL.includes('?limit=60')) {
+            window.location.href = currentURL.replace('?limit=60', '?limit=120');
+        } else if (currentURL.includes('?limit=120')) {
+            window.location.href = currentURL.replace('?limit=120', '?limit=60');
+        } else {
+          const newUrl = window.location.pathname + '?limit=120'
+          window.location.href = newUrl;
+        }
+    }
+
+
+</script>
+{% endblock %}

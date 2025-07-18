@@ -1,0 +1,48 @@
+<nav class="navbar_outer">
+    <div class="navbar_home">
+        <button><a href="/">Timesheet V.1</a></button>
+        <button onclick="toggleClass()" class="navbar_close"><i class="fa-solid fa-arrow-left"></i></button>
+    </div>
+    <div class="navbar_profil">
+        <p>User: {{ user.username }}</p>
+        <button onclick="window.location.href='/accounts/logout'"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+    </div>
+    <ul>
+        <li><a href="/buildings"><i class="fa-solid fa-user"></i>buildings</a></li>
+        {% if user.is_superuser%}
+        <li><a href="/admin"><i class="fa-solid fa-gear"></i>Admin panel</a></li>
+        {% endif %}
+    </ul>
+</nav>
+<script>
+    function toggleClass() {
+        const bodyElement = document.querySelector('body');
+        bodyElement.classList.toggle('closed_nav_bar');
+        if (bodyElement.classList.contains('closed_nav_bar')) {
+            localStorage.setItem('navbarClosed', 'true');
+        } else {
+            localStorage.setItem('navbarClosed', 'false');
+        }
+    }
+    function updateNavbarClass() {
+    const dashbord = document.querySelector('.dashbord_outer,.dashbord_outer_mob');
+    if (!dashbord) return; // safety check
+
+    if (window.innerWidth < 1250) {
+        dashbord.classList.remove('dashbord_outer');
+        dashbord.classList.add('dashbord_outer_mob');
+    } else {
+        dashbord.classList.remove('dashbord_outer_mob');
+        dashbord.classList.add('dashbord_outer');
+    }
+    }
+
+    // Run once on load
+    updateNavbarClass();
+
+    // Run on resize
+    window.addEventListener('resize', updateNavbarClass);
+    window.addEventListener('DOMContentLoaded', function() {
+        document.body.classList.remove('disable-transitions');
+    });
+</script>

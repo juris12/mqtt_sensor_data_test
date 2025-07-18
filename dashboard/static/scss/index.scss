@@ -1,0 +1,71 @@
+@import 'navbar.scss';
+@import '_inventory_table.scss';
+
+*{
+    box-sizing: border-box;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+html{
+    font-size: 16px;
+    background-color: #eeeeee;
+}
+body{
+    margin: 0%;
+}
+a{
+    text-decoration: none;
+    color: black;
+    &:hover{
+        cursor: pointer;
+    }
+}
+button{
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    background-color: transparent;
+}
+.zoom{
+    transition: all 0.5s;
+    &:hover{
+        scale: 1.05;
+    }
+}
+ul{
+    padding: 0px;
+    li{
+    list-style: none;
+    margin: 0%;
+    }
+}
+h1{
+    margin: 0px;
+}
+
+.succes_mesage, .success{
+    padding: 10px;
+    border: 1px solid rgb(76, 172, 76);
+    background-color: rgba(89, 218, 89, 0.288);
+    color: rgb(76, 172, 76);
+
+}
+.error_mesage{
+    padding: 10px;
+    border: 1px solid rgb(172, 76, 76);
+    background-color: rgba(218, 89, 89, 0.288);
+    color: rgb(172, 76, 76);
+}
+.info_mesage{
+    padding: 10px;
+    border: 1px solid rgb(34, 48, 155);
+    background-color: rgba(138, 144, 232, 0.288);
+    color: rgb(34, 48, 155);
+}
+.hover_bold{
+    padding: 10px;
+    background-color: rgb(228, 228, 228);
+    border-radius: 7px;
+    &:hover{
+        cursor: pointer;
+    }
+}

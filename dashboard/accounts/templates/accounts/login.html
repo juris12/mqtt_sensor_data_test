@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'accounts/css/accounts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+    <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/95715e8b3f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <form method="post" class="login_form">
+        <h3>Type your name and password</h3>
+
+        {% if error %}
+        <div style="color: red;">{{ error }}</div>
+        {% endif %}
+        {% csrf_token %}
+        
+        <div>
+            <label for="username">Name:</label>
+            <input type="text" name="username" id="username" required><br>
+        </div> 
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required><br>
+        </div>
+        
+        <button type="submit" class="zoom">Login</button>
+    </form>
+</body>
+</html>

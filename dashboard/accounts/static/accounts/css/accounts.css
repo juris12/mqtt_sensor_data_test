@@ -1,0 +1,133 @@
+.custom_form {
+  width: 80vw;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+}
+.custom_form .form_group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.custom_form .form_group label {
+  margin-bottom: 10px;
+}
+.custom_form .form_group input,
+.custom_form .form_group select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.custom_form .form_group input:focus,
+.custom_form .form_group select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+.custom_form .form_group select {
+  appearance: none;
+  background-color: #f8f9fa;
+  position: relative;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+}
+.custom_form .form_group select:hover {
+  background-color: #e9ecef;
+}
+.custom_form button[type=submit] {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.custom_form button[type=submit]:hover {
+  background-color: #0056b3;
+}
+
+.login_form {
+  background-color: #ffffff;
+  width: 400px;
+  border-radius: 10px;
+  margin: 20vh auto;
+  height: fit-content;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.login_form div {
+  margin-bottom: 10px;
+}
+.login_form input {
+  padding: 5px;
+}
+.login_form h3 {
+  text-align: center;
+}
+.login_form button {
+  background-color: rgb(32, 32, 123);
+  color: #f8f9fa;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin: auto;
+}
+
+.unauthorized_error_mesage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+.unauthorized_error_mesage h1 {
+  font-size: 3rem;
+}
+.unauthorized_error_mesage h2 {
+  font-size: 2rem;
+}
+
+@media only screen and (max-width: 1020px) {
+  .login_form {
+    width: 95%;
+    margin: 20vh auto;
+    font-size: 2rem;
+  }
+  .login_form div {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  .login_form input {
+    padding: 15px;
+    margin: 10px;
+    width: 95%;
+    font-size: 2rem;
+  }
+  .login_form button {
+    border-radius: 15px;
+    padding: 30px 55px;
+    margin: auto;
+    font-size: 2rem;
+  }
+  .custom_form {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  .custom_form input {
+    width: 80vw;
+  }
+  .custom_form button[type=submit] {
+    padding: 40px 25px;
+  }
+}
