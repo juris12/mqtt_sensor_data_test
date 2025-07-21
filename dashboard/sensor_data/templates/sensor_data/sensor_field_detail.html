@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="building_outer">
+    <h2>Records for {{ field.name }} ({{ sensor.sensor.name }} - {{ sensor.serial_number }})</h2>
+    <h4>Building: {{ sensor.building.name }}</h4>
+
+    {% if records %}
+        <table id="building_table">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                    <tr>
+                        <td>{{ record.timestamp }}</td>
+                        <td>{{ record.value }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No data found for this field.</p>
+    {% endif %}
+
+    <a href="{% url 'sensor_data_list' sensor.building.id %}">← Back to Sensors</a>
+</section>
+{% endblock %}

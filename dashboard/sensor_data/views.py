@@ -1,10 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .models import Building, Sensor, IndividualSensor
+from .models import Building, Sensor, IndividualSensor, DataField, Measurement
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.db.models import Case, When, IntegerField
-
 
 @login_required
 def building_list(request):
@@ -67,3 +66,52 @@ def building_names(request):
     ).filter(name__icontains=search_text).order_by('-starts_with', 'name').values('name')[:10]
     suggestion_list = [entry['name'] for entry in suggestions]
     return JsonResponse(suggestion_list, safe=False)
+
+
+
+
+@login_required
+def sensor_detail(request, id):
+    sensor = get_object_or_404(IndividualSensor, id=id)
+
+    latest_reading = sensor.readings.order_by('-timestamp').first()
+    measurements = []
+
+    if latest_reading:
+        for measurement in latest_reading.measurements.select_related('field'):
+            measurements.append({
+                'field_id': measurement.field.id,
+                'field_name': measurement.field.name,
+                'field_unit': measurement.field.unit,
+                'value': measurement.get_value()
+            })
+
+    return render(request, 'sensor_data/sensor_detail.html', {
+        'sensor': sensor,
+        'building': sensor.building,
+        'measurements': measurements,
+        'timestamp': latest_reading.timestamp if latest_reading else None,
+    })
+
+
+@login_required
+def sensor_field_detail(request, sensor_id, field_id):
+    sensor = get_object_or_404(IndividualSensor, id=sensor_id)
+    field = get_object_or_404(DataField, id=field_id)
+
+    measurements = (Measurement.objects
+        .filter(reading__individual_sensor=sensor, field=field)
+        .select_related('reading')
+        .order_by('-reading__timestamp')
+    )[:10]
+
+    records = [{
+        'timestamp': m.reading.timestamp,
+        'value': m.get_value()
+    } for m in measurements]
+
+    return render(request, 'sensor_data/sensor_field_detail.html', {
+        'sensor': sensor,
+        'field': field,
+        'records': records,
+    })

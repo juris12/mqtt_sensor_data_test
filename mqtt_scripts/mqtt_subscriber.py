@@ -39,7 +39,6 @@ def on_message(client, userdata, msg):
             return
         if parser_func != "data saved":
             cleaned_data = parser_func(data, save_sensor_data, topic_parts)
-            print(cleaned_data)
             # save_sensor_data(
             #     sensor_type=sensor_name.lower(),
             #     user=user,

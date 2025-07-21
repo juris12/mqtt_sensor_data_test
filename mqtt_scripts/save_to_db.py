@@ -54,12 +54,21 @@ def save_sensor_data(mqtt_username, building_name, sensor_name, timestamp, field
             return False
         datafield_id, field_type = field_row
 
-
+        # 4. Check if SensorReading already exists for this sensor and timestamp
         cur.execute("""
-            INSERT INTO sensor_data_sensorreading (individual_sensor_id, timestamp)
-            VALUES (%s, %s) RETURNING id
+            SELECT id FROM sensor_data_sensorreading
+            WHERE individual_sensor_id = %s AND timestamp = %s
         """, (individual_sensor_id, timestamp))
-        reading_id = cur.fetchone()[0]
+        reading_row = cur.fetchone()
+
+        if reading_row:
+            reading_id = reading_row[0]
+        else:
+            cur.execute("""
+                INSERT INTO sensor_data_sensorreading (individual_sensor_id, timestamp)
+                VALUES (%s, %s) RETURNING id
+            """, (individual_sensor_id, timestamp))
+            reading_id = cur.fetchone()[0]
 
         # Prepare value fields according to field_type
         float_value = int_value = str_value = bool_value = None

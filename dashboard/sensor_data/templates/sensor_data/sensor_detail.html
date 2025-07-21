@@ -1,64 +1,37 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block head %}
-<link rel="stylesheet" href="{% static '/sensor_data/css/index.css' %}">
-{% endblock %}
-
 {% block content %}
 <section class="building_outer">
-  <div class="building_detail">
-      <div class="building_detail_list">
-        <h2>building {{building.username}}</h2>
-        <p><span>average per day: </span> {{average}}h</p>
-        <p><span>median: </span> {{median}}h</p>
-        <p><span>Min: </span> {{min}}h</p>
-        <p><span>Max: </span> {{max}}h</p>
-      </div>
-      <div class="building_detail_graf">
-        <canvas id="attendanceChart" width="800px" height="400"></canvas>
-      </div>
-  </div>
-  <div class="building_filter">
-      <h4>Hours worked per day</h4>
-      <button id="toggleButton" onclick="toggleAmount()">Show 60/120</button>
-      <h4> Found {{ num_rows }} dates</h4>
-  </div>
+    <h2>Sensor Detail: {{ sensor.sensor.name }} ({{ sensor.serial_number }})</h2>
+    <h4>Building: {{ building }}</h4>
 
-  <table id="building_table">
-    <thead>
-      <tr>
-        <th onclick="toggleSort()">Date</th>
-        <th>Hours worked comb.</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for atte in attendance %}
-        <tr onclick="window.location.href='date/{{ atte.date }}'">
-          <td>{{ atte.date }}</td>
-          <td>{{ atte.total_hours }} h</td>
-        </tr>
-      {% empty %}
-        <tr>
-          <td colspan="2">No data found</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    {% if timestamp %}
+        <p><strong>Latest Reading:</strong> {{ timestamp }}</p>
+        <table id="building_table">
+            <thead>
+                <tr>
+                    <th>Data Field</th>
+                    <th>Value</th>
+                    <th>Unit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in measurements %}
+                    <tr onclick="window.location.href='{% url 'sensor_field_detail' sensor.id m.field_id %}'" style="cursor:pointer;">
+                        <td>{{ m.field_name }}</td>
+                        <td>{{ m.value }}</td>
+                        <td>{{ m.field_unit }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">No measurements available</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No readings found for this sensor.</p>
+    {% endif %}
 </section>
-
-
-<script>
-    function toggleSort() {
-        var currentURL = window.location.href;
-        if (currentURL.includes('?sort=AESC')) {
-            window.location.href = currentURL.replace('?sort=AESC', '?sort=DESC');
-        } else if (currentURL.includes('?sort=DESC')) {
-            window.location.href = currentURL.replace('?sort=DESC', '?sort=AESC');
-        } else {
-          const newUrl = window.location.pathname + '?sort=DESC'
-          window.location.href = newUrl;
-        }
-    }
-</script>
 {% endblock %}

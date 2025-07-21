@@ -19,10 +19,17 @@
     </thead>
     <tbody>
       {% for emp in sensor_data %}
-        <tr onclick="window.location.href='detail/{{ emp.id }}'">
+        <tr onclick="window.location.href='/buildings/sensor/detail/{{ emp.sensor.id }}'">
           <td>{{ emp.sensor.sensor.name }} - {{ emp.sensor.serial_number }}</td>
           <td>{{ emp.sensor.sensor_category.name }}</td>
-        <td>{{ emp.value }}</td>
+          <td>
+            {% if emp.value == 'N/A' %}
+                multiple values
+            {% else %}
+                {{ emp.value }}
+            {% endif %}
+          </td>
+
         </tr>
       {% empty %}
         <tr>
