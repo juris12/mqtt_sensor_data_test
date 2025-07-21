@@ -1,0 +1,11 @@
+[0;1;31m●[0m postgresql@14-main.service - PostgreSQL Cluster 14-main
+     Loaded: loaded (/lib/systemd/system/postgresql@.service; enabled-runtime; vendor preset: enabled)
+     Active: [0;1;31mfailed[0m (Result: protocol) since Sun 2025-07-20 10:32:14 EEST; 29s ago
+    Process: 7921 ExecStart=/usr/bin/pg_ctlcluster --skip-systemctl-redirect 14-main start [0;1;31m(code=exited, status=1/FAILURE)[0m
+        CPU: 28ms
+
+Jul 20 10:32:14 DESKTOP-0SFKCM5 systemd[1]: Starting PostgreSQL Cluster 14-main...
+Jul 20 10:32:14 DESKTOP-0SFKCM5 postgresql@14-main[7921]: Error: Port conflict: another instance is already running on /var/run/postgresql with port 5432
+Jul 20 10:32:14 DESKTOP-0SFKCM5 systemd[1]: postgresql@14-main.service: Can't open PID file /run/postgresql/14-main.pid (yet?) after start: Operation not permitted
+Jul 20 10:32:14 DESKTOP-0SFKCM5 systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mpostgresql@14-main.service: Failed with result 'protocol'.[0m
+Jul 20 10:32:14 DESKTOP-0SFKCM5 systemd[1]: [0;1;31m[0;1;39m[0;1;31mFailed to start PostgreSQL Cluster 14-main.[0m

@@ -9,7 +9,8 @@ MQTT_PORT = 1883
 
 # User credentials dictionary
 USER_CREDENTIALS = {
-    "dd": "dd",
+    "Sandis_3":"tmcnGz0z-wu6j6--sUQlYQ",
+    "ggds": "ggds",
     "monitor": "monitorpass"  # Special monitoring user
 }
 
@@ -463,45 +464,41 @@ def evaluate_callables(data):
     else:
         return data
     
+
 def publish_mock_data():
     clients = {}
     buildings = ["building_1", "building_2", "building_3"]
-    
-    # Create clients for each user
+
+    # Create clients for each user except monitor
     for user, password in USER_CREDENTIALS.items():
-        if user != "monitor":  # Skip monitor user for publishing
+        if user != "monitor":
             client = mqtt.Client()
             client.username_pw_set(user, password)
             client.connect(MQTT_BROKER, MQTT_PORT)
             clients[user] = client
-    
+
     try:
         while True:
             for user, client in clients.items():
                 for building in buildings:
                     for sensor_name, sensor_template in SENSOR_TEMPLATES.items():
                         topic = f"{user}/{building}/sensors/{sensor_name.lower()}"
-                        # Evaluate the sensor data by calling any lambda functions
                         data = evaluate_callables(sensor_template)
-                        
+
                         try:
                             json_data = json.dumps(data)
                             client.publish(topic, json_data)
-                            print(f"Published to {topic}: {json.dumps(data, indent=2)}")
+                            print(f"Published to {topic}:\n{json.dumps(data, indent=2)}")
                         except Exception as e:
-                            print(f"Error publishing {sensor_name}: {str(e)}")
-                            continue
-                            
-                        
-                        client.publish(topic, json.dumps(data))
-                        print(f"Published to {topic}: {json.dumps(data, indent=2)}")
-            time.sleep(30)
+                            print(f"Error publishing {sensor_name} for {user}: {str(e)}")
+
+            time.sleep(3)
+
     except KeyboardInterrupt:
         for client in clients.values():
             client.disconnect()
+        print("Disconnected all clients.")
 
-if __name__ == "__main__":
-    publish_mock_data()
 
 if __name__ == "__main__":
     publish_mock_data()

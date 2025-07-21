@@ -7,6 +7,7 @@ class Building(models.Model):
 
     def __str__(self):
         return self.name
+    
 
 class SensorCategory(models.Model):
     SENSOR_TYPES = [
@@ -24,12 +25,18 @@ class Sensor(models.Model):
     name = models.CharField(max_length=255)
     sensor_category = models.ForeignKey(SensorCategory, on_delete=models.SET_NULL, null=True, blank=True)
     manufacturer = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+    
+class IndividualSensor(models.Model):
+    sensor = models.ForeignKey(Sensor, on_delete=models.SET_NULL, null=True, blank=True)
     building = models.ForeignKey(Building, on_delete=models.SET_NULL, null=True, blank=True)
     serial_number = models.CharField(max_length=255, blank=True, null=True)
     
     def __str__(self):
-        return f"{self.name} - {self.serial_number}" if self.serial_number else self.name
-
+        return f"{self.sensor.name} - {self.serial_number}" if self.serial_number else self.sensor.name
+    
 class DataField(models.Model):
     DATA_TYPES = [
         ('FLOAT', 'Float'),
@@ -47,15 +54,15 @@ class DataField(models.Model):
         return f"{self.name} ({self.get_field_type_display()}) - {self.sensor_category.name}"
 
 class SensorReading(models.Model):
-    sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, related_name='readings')
+    individual_sensor = models.ForeignKey(IndividualSensor, on_delete=models.CASCADE, related_name='readings', null=True, blank=True, default=None)
     timestamp = models.DateTimeField()
     def __str__(self):
-        return f"{self.sensor.name} @ {self.timestamp}"
+        return f"{self.individual_sensor.sensor.name} @ {self.timestamp}"
     
     class Meta:
         ordering = ['-timestamp']
         indexes = [
-            models.Index(fields=['sensor', 'timestamp']),
+            models.Index(fields=['individual_sensor', 'timestamp']),
         ]
 
 class Measurement(models.Model):
@@ -73,7 +80,7 @@ class Measurement(models.Model):
         verbose_name_plural = 'Sensor Measurements'
     
     def __str__(self):
-        return f"{self.reading.sensor.name} - {self.field.name} = {self.get_value()}"
+        return f"{self.reading.individual_sensor.sensor.name} - {self.field.name} = {self.get_value()}"
     
     def get_value(self):
         """Returns the appropriate value based on field type"""

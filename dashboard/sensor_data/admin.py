@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django import forms
-from .models import Building, SensorCategory, Sensor, DataField, SensorReading, Measurement
+from .models import Building, SensorCategory, Sensor, DataField, SensorReading, Measurement, IndividualSensor
 
 class DataFieldForm(forms.ModelForm):
     class Meta:
@@ -59,9 +59,9 @@ class MeasurementInline(admin.TabularInline):
     
 @admin.register(SensorReading)
 class SensorReadingAdmin(admin.ModelAdmin):
-    list_display = ('sensor', 'timestamp', 'measurement_count')
-    list_filter = ('sensor__sensor_category', 'timestamp')
-    search_fields = ('sensor__name',)
+    list_display = ('individual_sensor', 'timestamp', 'measurement_count')
+    list_filter = ('individual_sensor__sensor__sensor_category', 'timestamp')
+    search_fields = ('individual_sensor__sensor__name',)
     date_hierarchy = 'timestamp'
     inlines = [MeasurementInline]
     
@@ -82,11 +82,17 @@ class SensorReadingInline(admin.StackedInline):
 
 @admin.register(Sensor)
 class SensorAdmin(admin.ModelAdmin):
-    list_display = ('name', 'manufacturer', 'sensor_category', 'building', 'last_reading')
-    list_filter = ('sensor_category', 'manufacturer', 'building')
-    search_fields = ('name', 'serial_number', 'manufacturer')
-    inlines = [SensorReadingInline]
+    list_display = ('name', 'manufacturer', 'sensor_category')
+    list_filter = ('sensor_category', 'manufacturer')
+    search_fields = ('name', 'manufacturer')
     
+@admin.register(IndividualSensor)
+class IndividualSensorAdmin(admin.ModelAdmin):
+    list_display = ('building', 'last_reading')
+    list_filter = ['building']
+    search_fields = ['serial_number'] 
+    inlines = [SensorReadingInline]
+   
     def last_reading(self, obj):
         last = obj.readings.order_by('-timestamp').first()
         return last.timestamp if last else None
@@ -105,7 +111,7 @@ class DataFieldAdmin(admin.ModelAdmin):
 class MeasurementAdmin(admin.ModelAdmin):
     list_display = ('reading', 'field', 'value_display')
     list_filter = ('field__sensor_category', 'field')
-    search_fields = ('reading__sensor__name', 'field__name')
+    search_fields = ('reading__individual_sensor__sensor__name', 'field__name')
     readonly_fields = ('reading', 'field')
     
     def value_display(self, obj):
@@ -119,5 +125,5 @@ class BuildingAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     
     def sensor_count(self, obj):
-        return obj.sensor_set.count()
+        return obj.individualsensor_set.count()
     sensor_count.short_description = 'Sensors'

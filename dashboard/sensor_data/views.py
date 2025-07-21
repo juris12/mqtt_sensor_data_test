@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .models import Building, Sensor
+from .models import Building, Sensor, IndividualSensor
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.db.models import Case, When, IntegerField
@@ -24,15 +24,15 @@ def building_list(request):
 @login_required
 def sensor_data_list(request, id):
     building = get_object_or_404(Building, id=id)
-    sensors = Sensor.objects.filter(building=building).prefetch_related(
+    sensors = IndividualSensor.objects.filter(building=building).prefetch_related(
         'readings__measurements__field'
     )
     
     sensor_data = []
-    for sensor in sensors:
-        latest_reading = sensor.readings.order_by('-timestamp').first()
+    for ind_sensor in sensors:
+        latest_reading = ind_sensor.readings.order_by('-timestamp').first()
         if latest_reading:
-            if sensor.sensor_category.sensor_type in ['ENVIRONMENT', 'METER']:
+            if ind_sensor.sensor.sensor_category.sensor_type in ['ENVIRONMENT', 'METER']:
                 # Get first measurement with value
                 measurement = latest_reading.measurements.first()
                 if measurement:
@@ -45,7 +45,7 @@ def sensor_data_list(request, id):
             value_display = "No readings"
         
         sensor_data.append({
-            'sensor': sensor,
+            'sensor': ind_sensor,
             'value': value_display
         })
     
