@@ -35,18 +35,8 @@ def on_message(client, userdata, msg):
         data = json.loads(msg.payload.decode())
         parser_func = load_parser(sensor_name.lower())
         if parser_func is None:
-            # print(f"{sensor_name} does not have parser func!")
+            print(f"{sensor_name} does not have parser func!")
             return
-        if parser_func != "data saved":
-            cleaned_data = parser_func(data, save_sensor_data, topic_parts)
-            # save_sensor_data(
-            #     sensor_type=sensor_name.lower(),
-            #     user=user,
-            #     building=building,
-            #     timestamp=cleaned_data["timestamp"],
-            #     value=cleaned_data["value"],
-            #     unit=cleaned_data["unit"]
-            # )
         print(f"Saved cleaned {sensor_name} data for {user} / {building}")
 
     except Exception as e:
